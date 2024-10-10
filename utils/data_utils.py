@@ -1,9 +1,13 @@
+import json
 from datetime import datetime, timedelta
 
 
 from datetime import datetime
 
 from datetime import datetime
+
+from bson import json_util
+
 
 def parse_date(date_str: str):
     has_seconds = len(date_str.split(' ')) > 2
@@ -23,3 +27,6 @@ def safe_int(value, default=0):
         return int(value) if value.strip() else default
     except ValueError:
         return default
+
+def parse_json(data):
+    return json.loads(json_util.dumps(data))

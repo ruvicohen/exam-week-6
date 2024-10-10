@@ -1,47 +1,36 @@
-import pytest
-import json
-from app import app
+from repository.accidents_repository import get_sum_accidents_by_area, get_sum_accidents_by_area_and_day, \
+    get_sum_accidents_by_area_and_start_date_for_week, get_sum_accidents_by_area_and_month, \
+    get_accidents_and_reason_by_area, get_accidents_and_stats_injury_by_area
 
-@pytest.fixture
-def client():
-    app.config['TESTING'] = True
-    client = app.test_client()
-    yield client
 
-def test_get_accidents_by_area(client):
-    response = client.get('/accidents/area/1235')
-    assert response.status_code == 200
-    data = json.loads(response.data)
-    assert isinstance(data, list)
+def test_get_sum_accidents_by_area():
+    result = get_sum_accidents_by_area("1235")
+    assert len(result) == 1
+    assert result[0]['accidents'] == 10
 
-def test_get_accidents_by_area_and_day(client):
-    response = client.get('/accidents/area/1652/day/2023-02-06')
-    assert response.status_code == 200
-    data = json.loads(response.data)
-    assert isinstance(data, list)
+def test_get_sum_accidents_by_area_and_day():
+    result = get_sum_accidents_by_area_and_day("1235", "2023-09-05")
+    assert len(result) == 1
+    assert result[0]['accidents'] == 3
 
-def test_get_accidents_by_area_and_start_date_for_week(client):
-    response = client.get('/accidents/area/1652/week/2023-02-06')
-    assert response.status_code == 200
-    data = json.loads(response.data)
-    assert isinstance(data, list)
+def test_get_sum_accidents_by_area_and_start_date_for_week():
+    result = get_sum_accidents_by_area_and_start_date_for_week("1235", "2023-09-01")
+    assert len(result) == 1
+    assert result[0]['accidents'] == 5
 
-def test_get_accidents_by_area_and_month(client):
-    response = client.get('/accidents/area/1235/month/2023-09')
-    assert response.status_code == 200
-    data = json.loads(response.data)
-    assert isinstance(data, list)
+def test_get_sum_accidents_by_area_and_month():
+    result = get_sum_accidents_by_area_and_month("1235", "2023-09")
+    assert len(result) == 1
+    assert result[0]['accidents'] == 7
 
-def test_get_accidents_and_reason_by_area(client):
-    response = client.get('/accidents/area/1652/reason')
-    assert response.status_code == 200
-    data = json.loads(response.data)
-    assert 'total_accidents' in data
-    assert 'accidents' in data
+def test_get_accidents_and_reason_by_area():
+    result = get_accidents_and_reason_by_area("1235")
+    assert result['total_accidents'] == 4
+    assert len(result['accidents']) == 4
+    assert result['accidents'][0]['reason'] == 'WEATHER'
 
-def test_get_accidents_and_stats_injury_by_area(client):
-    response = client.get('/accidents/area/1652/injuries')
-    assert response.status_code == 200
-    data = json.loads(response.data)
-    assert 'total_accidents' in data
-    assert 'accidents' in data
+def test_get_accidents_and_stats_injury_by_area():
+    result = get_accidents_and_stats_injury_by_area("1652")
+    assert result['total_accidents'] == 55
+    assert len(result['accidents']) == 55
+    assert result['accidents'][0]['injuries'] == 0

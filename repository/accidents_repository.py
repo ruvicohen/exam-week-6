@@ -63,9 +63,9 @@ def get_accidents_and_stats_injury_by_area(area: str):
 
     return {'total_accidents': 0, 'accidents': []}
 
-print(get_sum_accidents_by_area("1235"))
-print(get_sum_accidents_by_area_and_month('1235', "2023-09"))
-print(get_sum_accidents_by_area_and_day('1652', "2023-02-06"))
-print(get_sum_accidents_by_area_and_start_date_for_week('1652', "2023-02-06"))
-print(get_accidents_and_stats_injury_by_area('1652'))
-print(get_accidents_and_reason_by_area('1652'))
+# print(get_sum_accidents_by_area("1235"))
+# print(get_sum_accidents_by_area_and_month('1235', "2023-09"))
+# print(get_sum_accidents_by_area_and_day('1652', "2023-02-06"))
+# print(get_sum_accidents_by_area_and_start_date_for_week('1652', "2023-02-06"))
+# print(get_accidents_and_stats_injury_by_area('1652'))
+# print(get_accidents_and_reason_by_area('1652'))
