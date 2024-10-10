@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 
-client = MongoClient('mongodb://localhost:27017')
+client = MongoClient('mongodb://172.22.88.20:27017')
 
 accidents_data_db = client['accidents_data']
 
